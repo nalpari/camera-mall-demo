@@ -7,7 +7,7 @@ export type User = { id: string; name: string };
 
 const KEY = "kammer:session";
 const EVENT = "kammer:auth";
-const DEMO = { id: "demo", password: "kammer1234", user: { id: "demo", name: "데모 회원" } };
+const DEMO = { id: "demo", password: "kammer1234", user: Object.freeze({ id: "demo", name: "데모 회원" }) };
 
 // 저장에 실패하면 false: 이벤트를 보내지 않아 화면과 저장소가 어긋나지 않는다.
 const save = (user: User | null): boolean => {
@@ -70,5 +70,7 @@ const subscribe = (onChange: () => void) => {
 };
 
 export function useUser(): User | null {
+  if (typeof React.useSyncExternalStore !== "function")
+    throw new Error("useUser는 클라이언트 컴포넌트에서만 쓸 수 있습니다. 서버에서는 getUser를 쓰세요.");
   return React.useSyncExternalStore(subscribe, getUser, () => null);
 }
