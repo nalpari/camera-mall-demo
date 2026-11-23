@@ -1,0 +1,56 @@
+/* CSS Module 대신 일반 CSS: next.config의 turbopack "*.css" 규칙이 .module.css까지 전역으로 바꿔 버린다. login-page__ 접두사로 충돌을 피한다. */
+.login-page {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px var(--m) 64px;
+  background: var(--bg);
+}
+.login-page__mark { align-self: flex-start; font-size: 1.5rem; font-style: italic; letter-spacing: -0.02em; }
+.login-page__card { width: 100%; max-width: 440px; margin: auto 0; padding-top: 48px; }
+.login-page__title { font-size: var(--step-head); margin-bottom: 40px; }
+
+.login-page__form { display: grid; gap: 24px; }
+.login-page__field { display: grid; gap: 8px; }
+.login-page__field label { font-weight: 500; }
+.login-page__field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 0;
+  border-bottom: 2px solid var(--field);
+  border-radius: 0;
+  transition: border-color 0.2s var(--ease);
+}
+.login-page__field input:focus-visible { outline-offset: 0; border-bottom-color: var(--accent); }
+.login-page__field input[aria-invalid="true"] { border-bottom-color: #a0442c; }
+
+.login-page__pw { position: relative; }
+.login-page__pw input { padding-right: 88px; }
+.login-page__toggle {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  min-width: 72px; padding: 0 16px;
+  font: inherit; font-size: 1rem; color: var(--muted);
+  background: none; border: 0; cursor: pointer;
+}
+.login-page__toggle:hover { color: var(--ink); }
+
+.login-page__error { min-height: 1.6em; margin-top: -8px; font-size: 1rem; color: #a0442c; }
+.login-page__error:empty { min-height: 0; margin-top: -24px; }
+
+.login-page__submit { width: 100%; }
+.login-page__submit:disabled { cursor: progress; transform: none; opacity: 0.7; }
+
+.login-page__demo { font-size: 1rem; color: var(--muted); }
+.login-page__demo strong { font-weight: 500; color: var(--ink); }
+
+.login-page__done { display: grid; gap: 24px; justify-items: start; }
+
+@media (max-width: 520px) {
+  .login-page__card { padding-top: 32px; }
+  .login-page__title { margin-bottom: 28px; }
+}
