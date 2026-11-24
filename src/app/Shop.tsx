@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { signOut, useUser } from "./auth";
 import { catalog, won, type Item } from "./catalog";
 
 const addToCart = (n = 1) => dispatchEvent(new CustomEvent("kammer:cart", { detail: n }));
@@ -8,6 +10,7 @@ const addToCart = (n = 1) => dispatchEvent(new CustomEvent("kammer:cart", { deta
 export function Header() {
   const [count, setCount] = useState(0);
   const [onLight, setOnLight] = useState(false);
+  const user = useUser();
 
   useEffect(() => {
     const onAdd = (e: Event) => setCount((c) => c + (e as CustomEvent<number>).detail);
@@ -32,6 +35,14 @@ export function Header() {
         <a href="#inspection">검수 항목</a>
         <a href="#kit">키트 만들기</a>
         <a href="#atelier">아틀리에</a>
+        {user ? (
+          <span className="nav__auth">
+            <span className="nav__user" title={`${user.name}님`}>{user.name}님</span>
+            <button type="button" className="nav__logout" onClick={signOut}>로그아웃</button>
+          </span>
+        ) : (
+          <Link className="nav__auth" href="/login">로그인</Link>
+        )}
         <a className="nav__cart" href="#kit" aria-live="polite">장바구니 {count}</a>
       </nav>
     </header>

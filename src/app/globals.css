@@ -81,6 +81,10 @@ a { color: inherit; text-decoration: none; }
 .nav .nav__cart { padding: 6px 14px; background: var(--night-ink); color: var(--night); }
 .nav--light .nav__cart { background: var(--ink); color: var(--bg); }
 .nav .nav__cart:hover { opacity: 1; background: var(--accent); color: #fff; }
+.nav__auth { display: flex; align-items: center; gap: 12px; min-width: 0; white-space: nowrap; }
+.nav__user { min-width: 0; max-width: 9em; overflow: hidden; text-overflow: ellipsis; }
+.nav__logout { padding: 6px 0; font: inherit; color: inherit; background: none; border: 0; cursor: pointer; transition: opacity 0.2s; }
+.nav__logout:hover { opacity: 0.65; }
 
 /* ---------- hero: pinned disassembly scrub ---------- */
 .hero { position: relative; height: calc(var(--vh) * 360); background: #000; /* 영상 바탕과 같은 순흑 */ color: var(--night-ink); --p: 0; }
@@ -222,8 +226,15 @@ legend { color: var(--muted); margin-bottom: 8px; padding: 0; }
 }
 
 /* ---------- tablet & phone ---------- */
+/* 로그인하면 이름·로그아웃 자리를 내도록 좁은 폰에서는 첫 메뉴를, 더 좁으면 이름을 숨긴다 */
+@media (max-width: 480px) { .nav nav:has(.nav__user) > a:first-child { display: none; } }
+@media (max-width: 399px) { .nav__user { display: none; } }
 @media (max-width: 900px) {
-  .nav nav a:not(.nav__cart):not(:first-child) { display: none; }
+  .nav nav a:not(.nav__cart):not(.nav__auth):not(:first-child) { display: none; }
+  .nav { gap: 12px; }
+  .nav nav { min-width: 0; }
+  .nav nav > *, .nav__logout { flex-shrink: 0; }
+  .nav nav > .nav__auth { flex-shrink: 1; }
   .hero__frame { left: -41%; width: 139%; top: calc(var(--vh) * 13); transform: none; }
   .hero__copy { top: auto; bottom: calc(var(--vh) * 22); width: auto; right: var(--m); }
   .chapter { inset: auto auto 0 0; }
